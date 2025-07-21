@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.19)  17 JUL 2025 20:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.19)  21 JUL 2025 18:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -676,7 +676,7 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count322
 \l__pdf_internal_box=\box66
 )
-(/Users/russell/RustroverProjects/range_voting/out/paper.aux)
+(/Users/russell/RustroverProjects/voting_simulation/out/paper.aux)
 \openout1 = `paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
@@ -756,8 +756,8 @@ e
 ))
 Package hyperref Info: Link coloring OFF on input line 23.
 
-(/Users/russell/RustroverProjects/range_voting/out/paper.out)
-(/Users/russell/RustroverProjects/range_voting/out/paper.out)
+(/Users/russell/RustroverProjects/voting_simulation/out/paper.out)
+(/Users/russell/RustroverProjects/voting_simulation/out/paper.out)
 \@outlinefile=\write4
 \openout4 = `paper.out'.
 
@@ -786,30 +786,32 @@ Overfull \hbox (9.05847pt too wide) in paragraph at lines 34--34
 [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(/Users/russell/RustroverProjects/range_voting/out/paper.aux)
+
+[2] (/Users/russell/RustroverProjects/voting_simulation/out/paper.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+(rerunfilecheck)             Checksum: 14294EE3786C75778289A94EDF1BC980;1148.
  ) 
 Here is how much of TeX's memory you used:
- 22660 strings out of 473362
- 428133 string characters out of 5720983
- 798255 words of memory out of 5000000
- 45388 multiletter control sequences out of 15000+600000
- 567005 words of font info for 73 fonts, out of 8000000 for 9000
+ 22691 strings out of 473362
+ 428520 string characters out of 5720983
+ 804303 words of memory out of 5000000
+ 45406 multiletter control sequences out of 15000+600000
+ 567918 words of font info for 76 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  116i,9n,121p,542b,602s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></
-usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on /Users/russell/RustroverProjects/range_voting/out/paper.pdf (
-1 page, 29728 bytes).
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
+sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on /Users/russell/RustroverProjects/voting_simulation/out/paper.
+pdf (2 pages, 52327 bytes).
 PDF statistics:
- 33 PDF objects out of 1000 (max. 8388607)
- 23 compressed objects within 1 object stream
- 2 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 92 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
+ 14 named destinations out of 1000 (max. 500000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
 
