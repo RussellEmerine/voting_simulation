@@ -1,0 +1,170 @@
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{stmaryrd}
+\usepackage{enumerate}
+\usepackage{capt-of}
+\usepackage{xurl}
+\usepackage{hyperref}
+
+% Document
+\begin{document}
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{5pt}
+    \setlength{\headheight}{14.49999pt}
+    \addtolength{\topmargin}{-1.59999pt}
+
+    \title{Simulating Voting Systems}
+    \author{\normalsize{Russell Emerine (\url{remerine@andrew.cmu.edu}), Daniel Sleator (\url{sleator@andrew.cmu.edu})}}
+    \date{}
+
+    \maketitle
+
+    This project's source code is available online at \url{https://github.com/RussellEmerine/voting_simulation}.
+
+
+    \section{Abstract}\label{sec:abstract}
+
+    \textbf{
+        Much of the past work on voting systems focuses on ranked voting systems,
+        which have a number of limitations such as Arrow's Theorem \cite{Arrow}.
+        Furthermore, evaluation of their performance becomes more difficult when considering strategic voting behavior.
+        In this paper we consider ranked voting systems as well as the more general class of rated voting systems.
+        Like Smith, we evaluate ranked and rated voting systems
+        under a Monte Carlo simulation model of voter utilities and behaviors \cite{Smith}.
+        We replicate Smith's results with a wider selection of voting systems and voter utility distributions
+        and conclude that range voting has the best performance.
+    }
+
+
+    \section{Background}\label{sec:background}
+
+    \textcolor{red}{TODO: include?}
+
+
+    \section{Voting Systems}\label{sec:voting-systems}
+
+    A \textit{voting system} is a system where
+    a (usually large) number of \textit{voters} cast \textit{ballots} of some kind,
+    and the ballots are used to select one of
+    a (usually small, but greater than one) number of \textit{candidates}.
+
+    Some formulations allow the output to be a set of candidates or an ordering of candidates.
+    For simplicity, we will only consider systems that output a single winner.
+    We will also focus on cases with three or more candidates, as with two candidates,
+    almost all voting systems we consider exhibit the same optimal behavior.
+
+    We first describe several types of voting systems,
+    then list and describe the particular voting systems we consider in our simulation.
+
+    \subsection{``Obviously Bad'' Voting Systems}\label{subsec:obviously-bad-voting-systems}
+
+    Some voting systems that we consider, such as Random Winner and Worst Candidate,
+    are useful only as a frame of reference.
+
+    \subsection{Ranked Voting Systems}\label{subsec:ranked-voting-systems}
+
+    In a ranked voting system, ballot information can be encoded into an ordering of the candidates.
+    For instance, plurality voting only uses the most favored candidate from each ballot,
+    while Borda voting uses the whole ordering to produce the weighted sum.
+    Ranked voting systems traditionally output an ordering of candidates;
+    to choose our single winner we can simply choose the most favored candidate in the outcome.
+
+    Arrow's theorem states that, if there are at least three candidates,
+    ranked voting systems, no voting system may satisfy all of the following properties \cite{Arrow}:
+
+    \begin{itemize}
+        \item Pareto efficiency:
+        If every voter places $A$ before $B$, then the outcome also places $A$ before $B$.
+        (This can be weakened to non-imposition,
+        i.e.\ that for any $A$ and $B$, there is some cast of votes such that
+        the output places $A$ before $B$ \cite{Wilson}.)
+        \item Non-dictatorship:
+        There is no voter whose ordering is always the same as the outcome.
+        \item Independence of irrelevant alternatives:
+        In two elections with the same number of voters where each pair of
+        corresponding voters has the same relative ordering of $A$ and $B$,
+        the outcomes of both elections have the same relative ordering of $A$ and $B$.
+    \end{itemize}
+
+    The fact that it is impossible to have all three of these very reasonable conditions is a
+    severe limitation of ranked voting systems.
+    However, not all voting systems are ranked voting systems.
+
+    \subsection{Rated Voting Systems}\label{subsec:rated-voting-systems}
+
+    A rated voting system is a voting system whose ballot information allows voters to express
+    how strongly they support candidates.
+    Since these are not ranked voting systems, Arrow's theorem does not apply,
+    and it is completely possible to have Pareto efficiency,
+    non-dictatorship, and independence of irrelevant alternatives.
+
+    However, they are still subject to some restrictions, notably Gibbard's theorem,
+    that no deterministic process of collective decision may satisfy all of the following properties \cite{Gibbard}:
+
+    \begin{itemize}
+        \item The process has more than two possible outcomes.
+        \item There is no voter who singlehandedly determines the outcome.
+        \item The game-theoretically optimal ballot for a voter will not depend on
+        the voter's beliefs on other voters' ballots.
+    \end{itemize}
+
+    When applied to voting systems, this implies that non-dictatorial voting systems
+    with three or more possible outcomes (ranked, rated, or otherwise)
+    require some kind of strategic voting.
+
+    \subsubsection{An Aside about Determinism}
+
+    Most voting systems do not have a good way of handling ties without
+    using randomness or allowing multiple winners.
+    However, when the number of voters is reasonably large, the chance of a tie is negligible.
+    We will consider voting processes that are deterministic when there are no ties ``good enough.''
+
+    \subsection{COAF Systems}\label{subsec:coaf-systems}
+
+    COAF specification, and proof of optimal voter behavior.
+
+    \subsection{Non-COAF Systems}\label{subsec:non-coaf-systems}
+
+    List of non-COAF systems, and description of voter behavior.
+
+
+    \section{Utility Distributions}\label{sec:utility-distributions}
+
+    Discussion of utility distributions, including uniform vs.\ normal
+    vs.\ multimodal, and random vs.\ issue-based.
+
+
+    \section{Simulation}\label{sec:simulation}
+
+    Discussion of implementation of simulation.
+
+
+    \section{Analysis}\label{sec:analysis}
+
+    Analysis of some plots.
+
+
+    \section{Conclusions}\label{sec:conclusions}
+
+    Conclusions of the project.
+
+
+    \section{Appendix A: Plots}\label{sec:appendix-a:-plots}
+
+    All the plot images.
+
+
+    \bibliographystyle{plain}
+    \bibliography{paper}{}
+
+\end{document}
