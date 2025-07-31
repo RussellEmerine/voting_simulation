@@ -827,7 +827,7 @@ impl VotingStrategy for SingleTransferableMostLast {
 
 /// In Copeland voting, each voter submits a rank ordering of all the candidates, and the
 /// pairwise comparisons are reported. The candidate that wins against the greatest number of
-/// other individual candidates (with ties counting as 1/2) wins the election.
+/// other individual candidates (with ties counting as 1/2, not that they should matter) wins the election.
 ///
 /// Since ties are common no matter the size of the voter count, some tiebreaker is necessary.
 /// Borda count is a common tiebreaker, and is what I use.
