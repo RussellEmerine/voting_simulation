@@ -53,14 +53,14 @@ fn plot<Rng: rand::Rng>(
     // reverse to put the first at the top
     let (labels, strategies): (Vec<_>, Vec<_>) = labeled_strategies.into_iter().rev().unzip();
 
-    let root = SVGBackend::new(path, (1000, 100 * labels.len() as u32)).into_drawing_area();
+    let root = BitMapBackend::new(path, (1000, 100 * labels.len() as u32)).into_drawing_area();
     root.fill(&WHITE)?;
     let root = root.margin(5, 5, 5, 5);
     let mut chart = ChartBuilder::on(&root)
         .x_label_area_size(50)
         .y_label_area_size(250)
         .caption("Regret under various voting systems", ("sans-serif", 20))
-        .build_cartesian_2d(0.0_f32..0.3, labels[..].into_segmented())?;
+        .build_cartesian_2d(0.0_f32..0.2, labels[..].into_segmented())?;
 
     chart
         .configure_mesh()
@@ -328,8 +328,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform",
         &mut rng(),
-        |rng| UtilityMap::random(20, 5, rng, rand_distr::StandardUniform),
-        1_000,
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform),
+        10_000,
     )?;
 
     plot_utility_map_fn(
@@ -337,7 +337,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         &mut rng(),
         |rng| {
             UtilityMap::random_issue_based(
-                20,
+                100,
                 5,
                 rng,
                 &[
@@ -346,7 +346,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 ],
             )
         },
-        1_000,
+        10_000,
     )?;
 
     Ok(())
