@@ -1,0 +1,119 @@
+[
+  {
+    "label": "Star",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0006115076
+    }
+  },
+  {
+    "label": "Bucklin",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0012001275
+    }
+  },
+  {
+    "label": "Black",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0010615888
+    }
+  },
+  {
+    "label": "Copeland",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0008861418
+    }
+  },
+  {
+    "label": "Single Transferable Most Last",
+    "data": {
+      "quartiles": [
+        -0.01768049,
+        0.0012784459,
+        0.006720665,
+        0.013917737,
+        0.03287667
+      ],
+      "mean": 0.0089283725
+    }
+  },
+  {
+    "label": "Single Transferable Fewest First",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.000397089
+    }
+  },
+  {
+    "label": "Condorcet Ranked Pairs",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.00071147503
+    }
+  },
+  {
+    "label": "Condorcet Least Reversal",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0006854473
+    }
+  },
+  {
+    "label": "Plurality + runoff",
+    "data": {
+      "quartiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.00038756352
+    }
+  }
+]
