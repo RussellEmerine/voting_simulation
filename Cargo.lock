@@ -631,6 +631,7 @@ version = "0.1.0"
 dependencies = [
  "ordered-float",
  "plotters",
+ "plotters-backend",
  "rand",
  "rand_distr",
  "serde",

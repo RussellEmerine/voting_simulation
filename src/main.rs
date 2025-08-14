@@ -1,13 +1,21 @@
+mod boxplot;
 mod distr;
+mod quartiles;
 mod utility_map;
 mod voting_strategy;
 
+use crate::boxplot::Boxplot;
 use crate::distr::{Bimodal, Truncate};
+use crate::quartiles::Quartiles;
 use crate::utility_map::UtilityMap;
 use crate::voting_strategy::*;
 use plotters::coord::ranged1d::SegmentedCoord;
 use plotters::coord::types::{RangedCoordf32, RangedSlice};
-use plotters::prelude::*;
+use plotters::prelude::{
+    BitMapBackend, Cartesian2d, ChartBuilder, ChartContext, IntoDrawingArea, IntoSegmentedCoord,
+    SegmentValue, WHITE,
+};
+use plotters_backend::DrawingBackend;
 use rand::prelude::Distribution;
 use rand::rng;
 use serde::Serialize;
@@ -19,12 +27,8 @@ use std::fs::File;
 #[derive(Clone, Debug, Serialize)]
 struct Data {
     /// The quartiles, specifically minimum, first, quartile, median, third quartile, and maximum.
-    ///
-    /// For some reason, the `plotters` library stores the values as `f64` but only provides
-    /// the method to access the quartiles with return value of type `[f32; 5]`. Strange.
-    quartiles: [f32; 5],
-    /// The mean, using `f32` for consistency with the quartiles.
-    mean: f32,
+    quartiles: [f64; 5],
+    mean: f64,
 }
 
 /// A representation of the data with a label, specifically for JSON output.
@@ -62,7 +66,8 @@ fn plot_voting_strategy<'a, Rng: rand::Rng>(
         .collect();
 
     let quartiles = Quartiles::new(&regrets);
-    let mean = regrets.iter().sum::<f64>() as f32 / regrets.len() as f32;
+
+    let mean = regrets.iter().sum::<f64>() / (regrets.len() as f64);
 
     chart
         .draw_series(vec![Boxplot::new_horizontal(
