@@ -1,8 +1,8 @@
 use ordered_float::NotNan;
 use rand::distr::Distribution;
+use rand::prelude::SliceRandom;
 use rand::Rng;
 use std::cmp::Reverse;
-
 // For now I just generate all of the utilities at once, but when I scale it up I might instead
 // provide a way to generate a voter and its utilities on the fly, so the data doesn't have to all
 // be stored in memory at one time. That is probably unnecessary for small candidate counts.
@@ -16,14 +16,14 @@ pub type Candidate = usize;
 /// A structure representing the utility for each voter-candidate pair.
 /// It is assumed that all utilities are in [0.0, 1.0].
 #[derive(Clone, Debug)]
-pub struct UtilityMap(Vec<Vec<NotNan<f64>>>);
+pub struct UtilityMap(Vec<Vec<NotNan<f64>>>, Vec<Candidate>);
 
 impl UtilityMap {
     /// Construct a utility map directly from a Vec<Vec<NotNan<f64>>>.
     /// This checks that there is at least one voter and at least two candidates,
     /// that every voter has utilities for each candidate,
     /// and that every utility is normalized to [0, 1].
-    pub fn new(map: Vec<Vec<NotNan<f64>>>) -> Self {
+    pub fn new(map: Vec<Vec<NotNan<f64>>>, random_order: bool) -> Self {
         assert!(!map.is_empty());
         assert!(map[0].len() >= 2);
         assert!(map.iter().all(|row| row.len() == map[0].len()));
@@ -31,7 +31,15 @@ impl UtilityMap {
             .iter()
             .flatten()
             .all(|&u| NotNan::new(0.0).unwrap() <= u && u <= NotNan::new(1.0).unwrap()));
-        Self(map)
+        let mut utility_map = Self(map, vec![]);
+        let mut v: Vec<_> = (0..utility_map.candidate_count()).collect();
+        if random_order {
+            v.shuffle(&mut rand::rng());
+        } else {
+            v.sort_by_cached_key(|&c| Reverse(utility_map.evaluate(c)));
+        }
+        utility_map.1 = v;
+        utility_map
     }
 
     /// The number of candidates - this should always be at least 2.
@@ -67,11 +75,7 @@ impl UtilityMap {
     /// (We could return utility sum information, but that is usually unnecessary for
     /// strategical voting, and also can be calculated using the UtilityMap itself.)
     pub fn polling_order(&self) -> Vec<Candidate> {
-        let mut candidates: Vec<_> = (0..self.candidate_count()).collect();
-        // use sort_by_cached_key here since evaluate is a summation and not a simple access
-        // use Reverse since we want the biggest number first
-        candidates.sort_by_cached_key(|&candidate| Reverse(self.evaluate(candidate)));
-        candidates
+        self.1.clone()
     }
 
     /// For COAF systems (in the limit of infinite voters and with some other assumptions),
@@ -140,6 +144,7 @@ impl UtilityMap {
         c: usize,
         rng: &mut impl Rng,
         distr: impl Distribution<f64>,
+        random_order: bool,
     ) -> UtilityMap {
         UtilityMap::new(
             (0..n)
@@ -149,6 +154,7 @@ impl UtilityMap {
                         .collect()
                 })
                 .collect(),
+            random_order,
         )
     }
 
@@ -163,6 +169,7 @@ impl UtilityMap {
         c: usize,
         rng: &mut Rng,
         issue_distrs: &[Box<dyn Fn(&mut Rng) -> f64>],
+        random_order: bool,
     ) -> UtilityMap {
         let candidate_stances: Vec<Vec<f64>> = (0..c)
             .map(|_| issue_distrs.iter().map(|distr| distr(rng)).collect())
@@ -187,6 +194,7 @@ impl UtilityMap {
                         .collect()
                 })
                 .collect(),
+            random_order,
         )
     }
 }

@@ -398,7 +398,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform",
         &mut rng(),
-        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, false),
         10_000,
         false,
     )?;
@@ -406,7 +406,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform_scaled",
         &mut rng(),
-        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, false),
         10_000,
         true,
     )?;
@@ -420,6 +420,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 5,
                 rng,
                 Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
+                false,
             )
         },
         10_000,
@@ -435,6 +436,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 5,
                 rng,
                 Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
+                false,
             )
         },
         10_000,
@@ -457,6 +459,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                     0.0..1.0,
                 ),
+                false,
             )
         },
         10_000,
@@ -479,6 +482,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                     0.0..1.0,
                 ),
+                false,
             )
         },
         10_000,
@@ -497,6 +501,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                 ],
+                false,
             )
         },
         10_000,
@@ -515,6 +520,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                 ],
+                false,
             )
         },
         10_000,
@@ -539,6 +545,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .sample(rng)
                     }),
                 ],
+                false,
             )
         },
         10_000,
@@ -563,6 +570,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .sample(rng)
                     }),
                 ],
+                false,
             )
         },
         10_000,
@@ -601,6 +609,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .sample(rng)
                     }),
                 ],
+                false,
             )
         },
         10_000,
@@ -639,6 +648,269 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .sample(rng)
                     }),
                 ],
+                false,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    // from here on, using randomized poll order
+
+    plot_utility_map_fn(
+        "standard_uniform_rpo",
+        &mut rng(),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, true),
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "standard_uniform_scaled_rpo",
+        &mut rng(),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, true),
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "normal_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
+                true,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "normal_scaled_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
+                true,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "bimodal_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(
+                    Bimodal::new(
+                        rand_distr::Bernoulli::new(0.5).unwrap(),
+                        rand_distr::Normal::new(0.25, 0.05).unwrap(),
+                        rand_distr::Normal::new(0.75, 0.05).unwrap(),
+                    ),
+                    0.0..1.0,
+                ),
+                true,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "bimodal_scaled_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(
+                    Bimodal::new(
+                        rand_distr::Bernoulli::new(0.5).unwrap(),
+                        rand_distr::Normal::new(0.25, 0.05).unwrap(),
+                        rand_distr::Normal::new(0.75, 0.05).unwrap(),
+                    ),
+                    0.0..1.0,
+                ),
+                true,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                ],
+                true,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_scaled_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                ],
+                true,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_normal_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.1).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.05).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                ],
+                true,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_normal_scaled_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.1).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.05).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                ],
+                true,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_bimodal_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                ],
+                true,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_bimodal_rpo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                ],
+                true,
             )
         },
         10_000,
