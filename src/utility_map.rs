@@ -13,6 +13,16 @@ pub type Voter = usize;
 /// If there are c candidates, they are numbered from 0 to c - 1.
 pub type Candidate = usize;
 
+/// A representation of the technique used to determine poll order used.
+pub enum PollOrder {
+    /// Random poll order, independent of the actual population utilities
+    Random,
+    /// The candidates are ordered by their actual average utilities.
+    Range,
+    /// The candidates are ordered by how many voters consider them the most liked candidate.
+    Plurality,
+}
+
 /// A structure representing the utility for each voter-candidate pair.
 /// It is assumed that all utilities are in [0.0, 1.0].
 #[derive(Clone, Debug)]
@@ -23,7 +33,7 @@ impl UtilityMap {
     /// This checks that there is at least one voter and at least two candidates,
     /// that every voter has utilities for each candidate,
     /// and that every utility is normalized to [0, 1].
-    pub fn new(map: Vec<Vec<NotNan<f64>>>, random_order: bool) -> Self {
+    pub fn new(map: Vec<Vec<NotNan<f64>>>, poll_order: PollOrder) -> Self {
         assert!(!map.is_empty());
         assert!(map[0].len() >= 2);
         assert!(map.iter().all(|row| row.len() == map[0].len()));
@@ -33,10 +43,23 @@ impl UtilityMap {
             .all(|&u| NotNan::new(0.0).unwrap() <= u && u <= NotNan::new(1.0).unwrap()));
         let mut utility_map = Self(map, vec![]);
         let mut v: Vec<_> = (0..utility_map.candidate_count()).collect();
-        if random_order {
-            v.shuffle(&mut rand::rng());
-        } else {
-            v.sort_by_cached_key(|&c| Reverse(utility_map.evaluate(c)));
+        match poll_order {
+            PollOrder::Random => {
+                v.shuffle(&mut rand::rng());
+            }
+            PollOrder::Range => {
+                v.sort_by_cached_key(|&c| Reverse(utility_map.evaluate(c)));
+            }
+            PollOrder::Plurality => {
+                let mut votes = vec![0; utility_map.candidate_count()];
+                for i in 0..utility_map.voter_count() {
+                    let c = (0..utility_map.candidate_count())
+                        .max_by_key(|&c| utility_map.utility(i, c))
+                        .expect("no candidates found");
+                    votes[c] += 1;
+                }
+                v.sort_by_key(|&c| Reverse(votes[c]));
+            }
         }
         utility_map.1 = v;
         utility_map
@@ -144,7 +167,7 @@ impl UtilityMap {
         c: usize,
         rng: &mut impl Rng,
         distr: impl Distribution<f64>,
-        random_order: bool,
+        poll_order: PollOrder,
     ) -> UtilityMap {
         UtilityMap::new(
             (0..n)
@@ -154,7 +177,7 @@ impl UtilityMap {
                         .collect()
                 })
                 .collect(),
-            random_order,
+            poll_order,
         )
     }
 
@@ -169,7 +192,7 @@ impl UtilityMap {
         c: usize,
         rng: &mut Rng,
         issue_distrs: &[Box<dyn Fn(&mut Rng) -> f64>],
-        random_order: bool,
+        poll_order: PollOrder,
     ) -> UtilityMap {
         let candidate_stances: Vec<Vec<f64>> = (0..c)
             .map(|_| issue_distrs.iter().map(|distr| distr(rng)).collect())
@@ -194,7 +217,7 @@ impl UtilityMap {
                         .collect()
                 })
                 .collect(),
-            random_order,
+            poll_order,
         )
     }
 }

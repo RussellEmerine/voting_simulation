@@ -7,7 +7,7 @@ mod voting_strategy;
 use crate::boxplot::Boxplot;
 use crate::distr::{Bimodal, Truncate};
 use crate::quartiles::Quartiles;
-use crate::utility_map::UtilityMap;
+use crate::utility_map::{PollOrder, UtilityMap};
 use crate::voting_strategy::*;
 use plotters::coord::ranged1d::SegmentedCoord;
 use plotters::coord::types::{RangedCoordf32, RangedSlice};
@@ -398,7 +398,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform",
         &mut rng(),
-        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, false),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, PollOrder::Range),
         10_000,
         false,
     )?;
@@ -406,7 +406,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform_scaled",
         &mut rng(),
-        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, false),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, PollOrder::Range),
         10_000,
         true,
     )?;
@@ -420,7 +420,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 5,
                 rng,
                 Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -436,7 +436,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 5,
                 rng,
                 Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -459,7 +459,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                     0.0..1.0,
                 ),
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -482,7 +482,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                     0.0..1.0,
                 ),
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -501,7 +501,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                 ],
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -520,7 +520,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                 ],
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -545,7 +545,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .sample(rng)
                     }),
                 ],
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -570,7 +570,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .sample(rng)
                     }),
                 ],
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -609,7 +609,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .sample(rng)
                     }),
                 ],
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -648,7 +648,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .sample(rng)
                     }),
                 ],
-                false,
+                PollOrder::Range,
             )
         },
         10_000,
@@ -660,7 +660,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform_rpo",
         &mut rng(),
-        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, true),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, PollOrder::Random),
         10_000,
         false,
     )?;
@@ -668,7 +668,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     plot_utility_map_fn(
         "standard_uniform_scaled_rpo",
         &mut rng(),
-        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, true),
+        |rng| UtilityMap::random(100, 5, rng, rand_distr::StandardUniform, PollOrder::Random),
         10_000,
         true,
     )?;
@@ -682,7 +682,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 5,
                 rng,
                 Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -698,7 +698,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 5,
                 rng,
                 Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -721,7 +721,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                     0.0..1.0,
                 ),
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -744,7 +744,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                     0.0..1.0,
                 ),
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -763,7 +763,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                 ],
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -782,7 +782,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                     Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
                 ],
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -807,7 +807,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .sample(rng)
                     }),
                 ],
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -832,7 +832,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .sample(rng)
                     }),
                 ],
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -871,7 +871,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .sample(rng)
                     }),
                 ],
-                true,
+                PollOrder::Random,
             )
         },
         10_000,
@@ -910,7 +910,285 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .sample(rng)
                     }),
                 ],
-                true,
+                PollOrder::Random,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    // from here on, using plurality poll order
+
+    plot_utility_map_fn(
+        "standard_uniform_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                rand_distr::StandardUniform,
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "standard_uniform_scaled_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                rand_distr::StandardUniform,
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "normal_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "normal_scaled_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(rand_distr::Normal::new(0.5, 0.1).unwrap(), 0.0..1.0),
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "bimodal_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(
+                    Bimodal::new(
+                        rand_distr::Bernoulli::new(0.5).unwrap(),
+                        rand_distr::Normal::new(0.25, 0.05).unwrap(),
+                        rand_distr::Normal::new(0.75, 0.05).unwrap(),
+                    ),
+                    0.0..1.0,
+                ),
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "bimodal_scaled_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random(
+                100,
+                5,
+                rng,
+                Truncate::new(
+                    Bimodal::new(
+                        rand_distr::Bernoulli::new(0.5).unwrap(),
+                        rand_distr::Normal::new(0.25, 0.05).unwrap(),
+                        rand_distr::Normal::new(0.75, 0.05).unwrap(),
+                    ),
+                    0.0..1.0,
+                ),
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                ],
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_scaled_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                    Box::new(|rng| rand_distr::Uniform::new(-1.0, 1.0).unwrap().sample(rng)),
+                ],
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_normal_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.1).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.05).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                ],
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_normal_scaled_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.1).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(rand_distr::Normal::new(0.0, 0.05).unwrap(), -1.0..1.0)
+                            .sample(rng)
+                    }),
+                ],
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        true,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_bimodal_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                ],
+                PollOrder::Plurality,
+            )
+        },
+        10_000,
+        false,
+    )?;
+
+    plot_utility_map_fn(
+        "issue_based_2_bimodal_ppo",
+        &mut rng(),
+        |rng| {
+            UtilityMap::random_issue_based(
+                100,
+                5,
+                rng,
+                &[
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                    Box::new(|rng| {
+                        Truncate::new(
+                            Bimodal::new(
+                                rand_distr::Bernoulli::new(0.5).unwrap(),
+                                rand_distr::Normal::new(-0.5, 0.05).unwrap(),
+                                rand_distr::Normal::new(0.5, 0.05).unwrap(),
+                            ),
+                            -1.0..1.0,
+                        )
+                        .sample(rng)
+                    }),
+                ],
+                PollOrder::Plurality,
             )
         },
         10_000,
