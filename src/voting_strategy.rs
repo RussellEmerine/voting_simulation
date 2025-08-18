@@ -688,7 +688,7 @@ impl VotingStrategy for CondorcetRankedPairs {
     }
 }
 
-/// In Hare's Single Transferable Vote (or Instant Runoff Voting) system, each voter submits
+/// In Hare's Single Transferable Vote (called Ranked Choice in the paper) system, each voter submits
 /// a rank ordering of all the candidates, and the candidate with the fewest first-place rankings
 /// is repeatedly removed until there is one left.
 ///
@@ -756,7 +756,7 @@ impl VotingStrategy for SingleTransferableFewestFirst {
     }
 }
 
-/// In Coombs's Single Transferable Vote (or Instant Runoff Voting) system, each voter submits
+/// In Coombs's Single Transferable Vote (called Ranked Choice in the paper) system, each voter submits
 /// a rank ordering of all the candidates, and the candidate with the most last-place rankings
 /// is repeatedly removed until there is one left.
 ///

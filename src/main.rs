@@ -219,11 +219,11 @@ fn plot_utility_map_fn<Rng: rand::Rng>(
                 Box::new(<HonestVotingStrategy<CondorcetRankedPairs>>::default()),
             ),
             (
-                "Single Transferable Fewest First".to_string(),
+                "Ranked Choice Fewest First".to_string(),
                 Box::new(<HonestVotingStrategy<SingleTransferableFewestFirst>>::default()),
             ),
             (
-                "Single Transferable Most Last".to_string(),
+                "Ranked Choice Most Last".to_string(),
                 Box::new(<HonestVotingStrategy<SingleTransferableMostLast>>::default()),
             ),
             (
@@ -291,11 +291,11 @@ fn plot_utility_map_fn<Rng: rand::Rng>(
                     Box::new(CondorcetRankedPairs::new(honest_ratio)),
                 ),
                 (
-                    "Single Transferable Fewest First".to_string(),
+                    "Ranked Choice Fewest First".to_string(),
                     Box::new(SingleTransferableFewestFirst::new(honest_ratio)),
                 ),
                 (
-                    "Single Transferable Most Last".to_string(),
+                    "Ranked Choice Most Last".to_string(),
                     Box::new(SingleTransferableMostLast::new(honest_ratio)),
                 ),
                 (
@@ -363,11 +363,11 @@ fn plot_utility_map_fn<Rng: rand::Rng>(
                 Box::new(<StrategicVotingStrategy<CondorcetRankedPairs>>::default()),
             ),
             (
-                "Single Transferable Fewest First".to_string(),
+                "Ranked Choice Fewest First".to_string(),
                 Box::new(<StrategicVotingStrategy<SingleTransferableFewestFirst>>::default()),
             ),
             (
-                "Single Transferable Most Last".to_string(),
+                "Ranked Choice Most Last".to_string(),
                 Box::new(<StrategicVotingStrategy<SingleTransferableMostLast>>::default()),
             ),
             (
@@ -617,7 +617,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     plot_utility_map_fn(
-        "issue_based_2_bimodal",
+        "issue_based_2_bimodal_scaled",
         &mut rng(),
         |rng| {
             UtilityMap::random_issue_based(
@@ -879,7 +879,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     plot_utility_map_fn(
-        "issue_based_2_bimodal_rpo",
+        "issue_based_2_bimodal_scaled_rpo",
         &mut rng(),
         |rng| {
             UtilityMap::random_issue_based(
@@ -1157,7 +1157,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     plot_utility_map_fn(
-        "issue_based_2_bimodal_ppo",
+        "issue_based_2_bimodal_scaled_ppo",
         &mut rng(),
         |rng| {
             UtilityMap::random_issue_based(
